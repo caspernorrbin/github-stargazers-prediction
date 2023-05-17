@@ -16,7 +16,7 @@ params = {'q': 'stars:>1000', 'sort': 'stars', 'per_page': 100, 'page': 1}
 
 repos = []
 
-# # Loop through the API responses until we have 1000 repositories
+# Loop through the API responses until we have 1000 repositories
 # while len(repos) < 1000:
 #     print(f'Fetching page {params["page"]}')
 #     response = requests.get(endpoint, params=params)
@@ -34,7 +34,7 @@ with open('top_repos.csv', mode='a', newline='') as csv_file:
     writer = csv.writer(csv_file, delimiter=',')
     # writer.writerow(['Name', 'Forks', 'Watchers', 'Contributors', 'Commits', 'Branches', 'Open Issues', 'Closed Issues', 'Open PRs', 'Closed PRs', 'Stargazers'])
     
-    for i, repo in enumerate(repos[200:]):
+    for i, repo in enumerate(repos[700:]):
         print(f'Fetching repo {i+1}, {repo["name"]}')
         repo_url = repo['url']
         repo_response = requests.get(
@@ -73,9 +73,9 @@ with open('top_repos.csv', mode='a', newline='') as csv_file:
             'strong').text.replace(',', '')
         num_commits = int(num_commits_s)
 
-        branches_span = soup.find('span', text="branches")
+        branches_span = soup.find('span', string="branches")
         if branches_span is None:
-            branches_span = soup.find('span', text="branch")
+            branches_span = soup.find('span', string="branch")
         # print(branches_span)
         num_branches_s = branches_span.find_previous_sibling(
             'strong').text.replace(',', '')
@@ -83,7 +83,7 @@ with open('top_repos.csv', mode='a', newline='') as csv_file:
         
         open_issues_count = None
         closed_issues_count = None
-        if has_issues == "true":
+        if has_issues:
             issues_url = url + '/issues'
             response = requests.get(issues_url)
             soup = bs(response.text, 'html.parser')
