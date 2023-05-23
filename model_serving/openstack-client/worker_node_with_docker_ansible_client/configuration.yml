@@ -19,21 +19,6 @@
      apt: update_cache=yes upgrade=dist
      become: true
 
-   - name: Download git repository
-     become: true
-     git:
-      repo: 'https://github.com/sztoor/model_serving.git'
-      dest: /model_serving
-
-   - name: Change ownership of a directory
-     become: true
-     file:
-      path: /technical-training
-      state: directory
-      recurse: yes
-      owner: appuser
-      group: appuser
-
 - hosts: node_training
 
   tasks:
