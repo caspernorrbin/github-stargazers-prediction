@@ -1,7 +1,29 @@
+
 #cloud-config
 
 apt_update: true
-apt_upgrade: true
+
+packages:
+ - python3.8=3.8.10*
+ - python3-pip
+
+byobu_default: system
+
+runcmd:
+ - pip install -U "ray[default]"
+ - pip install -U "ray[tune]"
+ - pip install -U "ray[air]"
+ - pip3 install -U scikit-learn
+
+ - pip install tensorflow==2.12.0
+ - pip install keras==2.12.0
+ - pip install numpy
+ - pip install future
+ - pip install tensorflow-addons
+#cloud-config
+
+apt_update: true
+
 packages:
  - python3-pip
 
@@ -12,10 +34,9 @@ runcmd:
  - pip install -U "ray[tune]"
  - pip install -U "ray[air]"
  - pip3 install -U scikit-learn
- - pip install ray[tune]
 
- - pip install tensorflow==2.10.0
- - pip install keras==2.10.0
+ - pip install tensorflow==2.12.0
+ - pip install keras==2.12.0
  - pip install numpy
  - pip install future
  - pip install tensorflow-addons
