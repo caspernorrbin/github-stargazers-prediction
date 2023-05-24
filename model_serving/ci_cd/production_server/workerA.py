@@ -7,7 +7,7 @@ from tensorflow.keras.models import model_from_json
 
 model_json_file = './model.json'
 model_weights_file = './model.h5'
-data_file = './pima-indians-diabetes.csv'
+data_file = './top_repos.csv'
 
 def load_data():
     dataset =  loadtxt(data_file, delimiter=',')
@@ -19,14 +19,9 @@ def load_data():
 
 def load_model():
     # load json and create model
-    json_file = open(model_json_file, 'r')
-    loaded_model_json = json_file.read()
-    json_file.close()
-    loaded_model = model_from_json(loaded_model_json)
-    # load weights into new model
-    loaded_model.load_weights(model_weights_file)
+    model = tf.keras.saving.load_model("model")
     #print("Loaded model from disk")
-    return loaded_model
+    return model
 
 # Celery configuration
 CELERY_BROKER_URL = 'amqp://rabbitmq:rabbitmq@rabbit:5672/'

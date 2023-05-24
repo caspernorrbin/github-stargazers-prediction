@@ -53,7 +53,7 @@ secgroups = ['default']
 
 print ("Creating instances ... ")
 instance_node = nova.servers.create(name="grp6_node_server_with_docker_"+str(identifier), image=image, flavor=flavor>
-inst_status_prod = instance_node.status
+inst_status_node = instance_node.status
 
 print ("waiting for 10 seconds.. ")
 time.sleep(10)
