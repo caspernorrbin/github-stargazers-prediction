@@ -13,7 +13,7 @@ flavor = "ssc.medium"
 private_net = "UPPMAX 2023/1-1 Internal IPv4 Network"
 floating_ip_pool_name = None
 floating_ip = None
-image_name = "Ubuntu 22.04 - 2023.01.07"
+image_name = "cd2ec19e-7760-4595-a07c-c3ff53a3d6bb"
 
 identifier = random.randint(1000,9999)
 

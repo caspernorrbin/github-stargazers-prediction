@@ -4,7 +4,6 @@
 apt_update: true
 
 packages:
- - python3.8=3.8.10*
  - python3-pip
 
 byobu_default: system
