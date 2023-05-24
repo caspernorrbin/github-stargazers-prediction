@@ -1,31 +1,37 @@
 import os
 import time
 import pandas as pd
+import numpy as np
 import ray
 from ray import tune
 import tensorflow as tf
 import tensorflow_addons as tfa
 import tensorflow_decision_forests as tfdf
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 
 
 def load_dataset():
-    df = pd.read_csv("top_repos.csv")
+    df = pd.read_csv("/home/ubuntu/Data_engineering_project/github/top_repos_new.csv")
     y = df['Stargazers']
     X = df.drop('Stargazers', axis=1)
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
    
-    scaler = MinMaxScaler()
+    scaler = StandardScaler()
+    scaler2 = StandardScaler()
     scaler.fit(X_train)
+    scaler2.fit(X_test)
 
     X_train = scaler.transform(X_train)
-    X_test = scaler.transform(X_test)
+    X_test = scaler2.transform(X_test)
+
+    X_train = np.asarray(X_train).astype('float32')
+    X_test = np.asarray(X_test).astype('float32')
 
     y_train = y_train.to_numpy()
     y_test = y_test.to_numpy()
-    
+
     return X_train, X_test, y_train, y_test
 
 def compile_rf_model():
@@ -152,8 +158,8 @@ def main():
     one_layer_tuner = tune.Tuner(
         train_one_layer_model,
         param_space={
-            "batch_size": tune.grid_search([32, 64, 128]),
-            "epochs": tune.grid_search([50, 100, 200, 500])
+            "batch_size": tune.grid_search([8, 16, 32, 64]),
+            "epochs": tune.grid_search([100, 200, 500])
         }
     )
 
@@ -168,8 +174,8 @@ def main():
     six_layer_tuner = tune.Tuner(
         train_six_layer_model,
         param_space={
-            "batch_size": tune.grid_search([32, 64, 128]),
-            "epochs": tune.grid_search([50, 100, 200, 500])
+            "batch_size": tune.grid_search([8, 16, 32, 64]),
+            "epochs": tune.grid_search([100, 200, 500])
         }
     )   
     
@@ -184,15 +190,14 @@ def main():
     nn_tuner = tune.Tuner(
         train_nn_model,
         param_space={
-            "batch_size": tune.grid_search([32, 64, 128]),
-            "epochs": tune.grid_search([50, 100, 200, 500])
+            "batch_size": tune.grid_search([8, 16, 32, 64]),
+            "epochs": tune.grid_search([100, 200, 500])
         }
     )
     
     results = nn_tuner.fit()
     best_result = results.get_best_result(metric="score", mode="max")
     nn_score = best_result.metrics["score"]
-    print("NN score: ", nn_score)
     if nn_score > six_layer_score:
         model = tf.keras.models.load_model(best_result.best_checkpoints[0][0].to_directory())
     
@@ -201,6 +206,10 @@ def main():
     print("Tune time: ", end_time - start_tune_time)
     
     model.summary()
+    print("RF score: ", rf_score)
+    print("One layer score: ", one_layer_score)
+    print("Six layer score: ", six_layer_score)
+    print("NN score: ", nn_score)
     model.save("model", save_format="tf")
 
 if __name__ == '__main__':

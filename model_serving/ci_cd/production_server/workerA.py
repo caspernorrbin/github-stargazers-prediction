@@ -2,24 +2,24 @@ from celery import Celery
 
 from numpy import loadtxt
 import numpy as np
-from tensorflow.keras.models import model_from_json
+import pandas as pd
+import tensorflow as tf
+from sklearn.preprocessing import StandarScaler
 
 
-model_json_file = './model.json'
-model_weights_file = './model.h5'
+model_file = 'model'
 data_file = './top_repos.csv'
 
 def load_data():
-    dataset =  loadtxt(data_file, delimiter=',')
-    X = dataset[:,0:8]
-    y = dataset[:,8]
-    y = list(map(int, y))
-    y = np.asarray(y, dtype=np.uint8)
+    df = pd.read_csv(data_file)
+    y = df['Stargazers']
+    X = df.drop('Stargazers', axis=1)   
+
     return X, y
 
 def load_model():
     # load json and create model
-    model = tf.keras.saving.load_model("model")
+    model = tf.keras.saving.load_model(model_file)
     #print("Loaded model from disk")
     return model
 
