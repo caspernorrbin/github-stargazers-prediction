@@ -21,43 +21,11 @@
 
 
 
-
-
-
-  - name: add github ssh key
-    copy: >
-      src=id_rsa.github
-      dest=/root/.ssh/id_rsa.github
-      owner=root
-      group=root
-      mode=0600
-  
-  - name: configure ssh to use ansible key for github.com
-    template: >
-      src=ssh_config.j2
-      dest=/root/.ssh/config
-      owner=root
-      group=root
-      mode=0644
-      
-  - name: clone a private repository
-    git: >
-      repo=ssh://git@github.com:sebbemikkelsen/Data_engineering_project.git
-      key_file=id_rsa.github
-      dest=/Data_engineering_project
-
-
-
-
-
-
-
-
-#   - name: Download git repository
-#     become: true
-#     git:
-#      repo: 'https://github.com/sebbemikkelsen/Data_engineering_project.git'
-#      dest: /Data_engineering_project 
+   - name: Download git repository
+     become: true
+     git:
+      repo: 'https://github.com/sebbemikkelsen/Data_engineering_project.git'
+      dest: /Data_engineering_project 
       
    - name: Change ownership of a directory
      become: true
@@ -142,4 +110,4 @@
    - name: Install ML packages
      become: true
      pip: 
-      name: tensorflow==2.10.0, keras==2.10.0, numpy, future, ray["default"], ray["air"], tensorflow_addons, tensorflow_decision_forests, pandas, scikit-learn
+      name: tensorflow==2.10.0, keras==2.10.0, numpy, future, ray["default"], ray["tune"], tensorflow-addons, tensorflow_decision_forests, pandas, scikit-learn
