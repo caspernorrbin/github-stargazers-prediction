@@ -7,7 +7,7 @@ from tensorflow.keras.models import model_from_json
 
 model_json_file = './model.json'
 model_weights_file = './model.h5'
-data_file = './top_repos.csv'
+data_file = './sample_repos.csv'
 
 def load_data():
     dataset =  loadtxt(data_file, delimiter=',')

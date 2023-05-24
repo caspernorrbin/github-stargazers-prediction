@@ -95,7 +95,7 @@
      become: true
      shell: docker compose up -d 
      args: 
-      chdir: Data_engineering_project/model_serving/ci_cd/production_server 
+      chdir: /Data_engineering_project/model_serving/ci_cd/production_server 
 
 - hosts: devserver
   
@@ -110,4 +110,4 @@
    - name: Install ML packages
      become: true
      pip: 
-      name: tensorflow==2.10.0, keras==2.10.0, numpy, future, ray["default"], ray["tune"], tensorflow-addons, tensorflow_decision_forests, pandas, scikit-learn
+      name: tensorflow==2.10.0, keras==2.10.0, numpy, future, ray[default], ray[tune], tensorflow-addons, tensorflow_decision_forests, pandas, scikit-learn
