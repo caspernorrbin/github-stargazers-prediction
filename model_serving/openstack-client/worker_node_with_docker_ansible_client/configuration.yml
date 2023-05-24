@@ -29,7 +29,7 @@
    - name: Install ML packages
      become: true
      pip:
-      name: tensorflow==2.10.0, keras==2.10.0, numpy, future, ray["default"], ray["air"], tensorflow_addons, tensorf>
+      name: tensorflow==2.10.0, keras==2.10.0, numpy, future, ray["default"], ray["tune"], tensorflow-addons, tensorflow_decision_forests, pandas, scikit-lear
 
     - name: Join Ray cluster
       become: true
