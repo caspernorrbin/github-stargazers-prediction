@@ -1,12 +1,28 @@
 #cloud-config
 
-users:
- - name: appuser
-   sudo: ALL=(ALL) NOPASSWD:ALL
-   home: /home/appuser
-   shell: /bin/bash
-   ssh_authorized_keys:
-     - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPaChHojKrhlL3xq6uc6fGvLed8MLsj//xR1ZmKHUVKiNcdIxmWM2X17jVbv7Z0kPo5UP5WiYtiV+KhBs9DmPhQlkebfi2RhifjxFdsQeGI6uFeBRkpEd80+LH4zWZGvIoB6dvhnN7scqUnkSeetNWCLrO8CrXG1DuGaPVT0j4B6ep8aaHXIYU2ZDXBkXFeUcqmlQPc5my7YW4Tzf+liZPFBMe/YB/Gk8ilCPnP/z+67IBrlj8XZEwFrDIkWt8931ZOSe0IFFvOQfGX04qMs8eGvPXLfZGrsJdFOYW9WBzdIu3ex6qNTBbgQ630HGOnpSjAgeld8/L9prRfVvoK8p6d6UQKZdcDzHmB/20n5NJ29FPQirU0Ld3cmcyxsfePFc5XVoEX2dJ5Yi4LbpJ18YYIcHRVf3FMSjNXkLqKPuBz/I48wHowl3mEbi44RClNKgzR4whPRCI1PB4VdjgQmjt9gK3vt8i/+AYchI51MUemkLIBwdYxFqWsksHG9nuoCc= ubuntu@group6-client
+apt_update: true
+apt_upgrade: true
+packages:
+ - python3-pip
 
-byobu_default: system
+byobu_default: system 
 
+runcmd:
+ - pip install -U "ray[default]"
+ - pip install -U "ray[tune]"
+ - pip install -U "ray[air]"
+ - pip3 install -U scikit-learn
+ - pip install ray[tune]
+
+ - pip install tensorflow==2.10.0
+ - pip install keras==2.10.0
+ - pip install numpy
+ - pip install future
+ - pip install tensorflow-addons
+ - pip install tensorflow_decision_forests
+ - pip install pandas
+
+ - export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.10/dist-packages
+
+
+ - ray start --address=192.168.2.145:6379 

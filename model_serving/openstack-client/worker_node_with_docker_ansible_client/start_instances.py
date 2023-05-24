@@ -9,7 +9,7 @@ from keystoneauth1 import loading
 from keystoneauth1 import session
 
 
-flavor = "ssc.small"
+flavor = "ssc.medium"
 private_net = "UPPMAX 2023/1-1 Internal IPv4 Network"
 floating_ip_pool_name = None
 floating_ip = None
@@ -45,14 +45,14 @@ else:
 #print(os.getcwd() + "\n")
 cfg_file_path =  os.getcwd()+'/node-cloud-cfg.txt'
 if os.path.isfile(cfg_file_path):
-    userdata_prod = open(cfg_file_path)
+    userdata_node = open(cfg_file_path)
 else:
     sys.exit("node-cloud-cfg.txt is not in current working directory")
 
 secgroups = ['default']
 
 print ("Creating instances ... ")
-instance_node = nova.servers.create(name="grp6_node_server_with_docker_"+str(identifier), image=image, flavor=flavor>
+instance_node = nova.servers.create(name="grp6_training_node_"+str(identifier), image=image, flavor=flavor, key_name='Group6_key',userdata=userdata_node, nics=nics,security_groups=secgroups)
 inst_status_node = instance_node.status
 
 print ("waiting for 10 seconds.. ")
