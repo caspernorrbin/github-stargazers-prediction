@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup as bs
 import pickle
 
 endpoint = 'https://api.github.com/search/repositories'
+# Token is invalid
 token = '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'
 
 # Make a request to search for repositories with more than 100,000 stars
