@@ -22,6 +22,9 @@ The predictions on the front-end can be accessed on port `5100`, the predictions
 
 ## Authors
 Rabia Bashir
+
 Sebastian Mikkelsen Toth
+
 Casper Norrbin
+
 Magnus Olander
