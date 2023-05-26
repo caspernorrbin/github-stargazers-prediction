@@ -18,7 +18,7 @@ To start model training and evaluation, run `model_serving/ci_cd/development_ser
 
 To deploy this model to the production server, create a git repository and a git hook. Push the model to repository for it to be automatically downloaded on the production server. It is also possible to transfer the model manually or using other methods.
 
-The predictions on the front-end can be accessed on port `5100`, the predictions can be reached in `IP/predictions`
+The front-end of the production can be accessed on port `5100`, and the predictions can be reached on the subdirectory `/predictions`
 
 ## Authors
 Rabia Bashir
